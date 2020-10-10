@@ -4,18 +4,15 @@ const MODERN_ACTIVITY= 15;
 const HALF_LIFE_PERIOD= 5730;
 
 module.exports = function dateSample(sampleActivity) {
-    var k =  0.693 / HALF_LIFE_PERIOD;
-    var n = parseFloat(sampleActivity);
-   
-    if (typeof sampleActivity !== "string") {
-        return false; 
+  try{
+    if (sampleActivity && typeof sampleActivity == 'string'){
+      numericValue = parseFloat(sampleActivity);
+      if (numericValue > 0 && numericValue < MODERN_ACTIVITY){
+        return Math.ceil(Math.log(MODERN_ACTIVITY / numericValue)*HALF_LIFE_PERIOD/0.693);
+      }
     }
-    if (Number.isNaN(n)) {
-        return false;
-    }
-
-    if (n > 15 || n <= 0) {
-        return false;
-    }
-    return Math.ceil(Math.log(MODERN_ACTIVITY/n)/k);
+  }
+  catch(ex){
+  }
+  return false;
 };
